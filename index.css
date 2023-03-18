@@ -31,14 +31,16 @@ p {
 }
 .firstContainer {
   display: flex;
-  gap: 50px;
+  gap: 30px;
   justify-content: center;
 }
-
+.img-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 img {
   width: 250px;
-  display: block;
-  margin: 0 auto;
 }
 .input {
   display: flex;
@@ -155,6 +157,7 @@ h2 {
   }
   .firstContainer {
     flex-direction: column;
+
     gap: 10px;
   }
   #secondContainer {
