@@ -2,22 +2,48 @@ const secondContainer = document.getElementById("secondContainer")
 const title = document.getElementById("title")
 const date = document.getElementById("date")
 const addbtn = document.getElementById("add-btn")
-let eventTitleName = []
-let eventDate = []
+let appointmentDetails = [{ name: "Mahadev", date: "09-03-2022", star: false }, { name: "Mahadev", date: "09-03-2023", star: false }]
+// let appointmentDetails = []
 let warning = document.getElementById("warning")
-function render() {
-    addbtn.style.background = "blue"
-    let name = title.value
-    let sDate = date.value
-    title.value = ''
-    date.value = ""
-    if (sDate === "") {
-        warning.textContent = "Date can't be null"
+let starredBtnActive = false
+const starredBtn = document.getElementById("starred")
+render(appointmentDetails)
+function render(details) {
+    secondContainer.innerHTML = ""
+    let s = ""
+    for (let i = 0; i < details.length; i++) {
+        s = `<div id="app-${i}" class="appointment">
+                <h2 class="title">${details[i].name}</h2>
+                <h3>Date: ${details[i].date}</h3>
+                <i id="star-${i}" onclick="star(this.id)" class="fa-regular fa-star star"></i>
+                <i id="delete-${i}" onclick="delApp(this.id)" class="fa-solid fa-trash delete"></i>
+            </div>`
+        secondContainer.innerHTML += s
+        if (details[i].star === true) {
+            const starBtn = document.getElementById(`star-${i}`)
+            starActive(starBtn)
+        }
+        else {
+            const starBtn = document.getElementById(`star-${i}`)
+            starFalse(starBtn)
+        }
+    }
+
+}
+addbtn.addEventListener("click", function () {
+    if (title.value === "" || date.value === "") {
+        warning.textContent = "One of the field is Empty"
     }
     else {
         warning.textContent = ""
-        eventTitleName.push(name)
-        const rev = sDate.split("-")
+        let objDetails = {
+            name: title.value,
+            date: date.value,
+            starred: false
+        }
+        title.value = ""
+        date.value = ""
+        const rev = objDetails.date.split("-")
         newS = ""
         for (let i = rev.length - 1; i >= 0; i--) {
             if (i == 0) {
@@ -27,15 +53,68 @@ function render() {
                 newS += rev[i] + "-"
             }
         }
-        eventDate.push(newS)
-        let s = ""
-        for (let i = 0; i < eventDate.length; i++) {
-            s += `<div id="${i}" class="appointment">
-                <h2 class="title">${eventTitleName[i]}</h2>
-                <h3>date: ${eventDate[i]}</h3>
-            </div>`
-        }
-        secondContainer.innerHTML = s
+        objDetails.date = newS
+        appointmentDetails.push(objDetails)
+
+    }
+    render(appointmentDetails)
+})
+
+function star(id) {
+    const starBtn = document.getElementById(id)
+    const index = Number(id.charAt(id.length - 1))
+    if (appointmentDetails[index].star === false) {
+        appointmentDetails[index].star = true
+        starActive(starBtn)
+    }
+    else {
+        appointmentDetails[index].star = false
+        starFalse(starBtn)
     }
 
 }
+function starActive(starBtn) {
+    starBtn.style.color = "#e6ee00"
+    starBtn.style.fontWeight = "900"
+}
+function starFalse(starBtn) {
+    starBtn.style.color = "black"
+    starBtn.style.fontWeight = "100"
+}
+
+starredBtn.addEventListener("click", function () {
+    if (starredBtnActive === false) {
+        starredBtnActive = true
+        starredBtn.style.background = "#0059dd"
+        starredBtn.style.color = "whitesmoke"
+        let starredObj = []
+        for (let i = 0; i < appointmentDetails.length; i++) {
+            if (appointmentDetails[i].star === true) {
+                starredObj.push(appointmentDetails[i])
+            }
+        }
+        render(starredObj, starredBtnActive)
+    }
+    else {
+        starredBtnActive = false
+        starredBtn.style.background = "whitesmoke"
+        starredBtn.style.color = "#0059dd"
+        render(appointmentDetails, starredBtnActive)
+    }
+})
+
+function delApp(id) {
+
+    const index = Number(id.charAt(id.length - 1))
+    console.log(index)
+    appointmentDetails.splice(index, 1)
+    console.log(appointmentDetails)
+    render(appointmentDetails)
+
+}
+
+const deleteAll = document.getElementById("deleteAll")
+deleteAll.addEventListener('click', function () {
+    appointmentDetails = []
+    render(appointmentDetails)
+})

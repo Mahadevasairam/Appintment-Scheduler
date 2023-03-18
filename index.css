@@ -1,8 +1,10 @@
 html {
-  background: url(assests/stacked-waves-haikei.svg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  height: 100vh;
+  background: rgb(0, 89, 221);
+  background: linear-gradient(
+    0deg,
+    rgba(0, 89, 221, 1) 20%,
+    rgba(121, 175, 255, 1) 88%
+  );
   margin: 0;
 }
 body {
@@ -15,6 +17,7 @@ body {
 }
 h1 {
   margin-top: 0;
+  margin: 10px auto;
 }
 p {
   margin: 0;
@@ -29,28 +32,34 @@ p {
 .firstContainer {
   display: flex;
   gap: 50px;
-  align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 }
+
 img {
   width: 250px;
+  display: block;
+  margin: 0 auto;
 }
 .input {
   display: flex;
   flex-direction: column;
-  border-radius: 10px;
 }
 #add-btn {
-  color: aliceblue;
+  color: #0059dd;
   font-weight: bolder;
   margin: 20px 0 10px 0;
   width: 100px;
-  background-color: #0059dd;
-  border-width: 0;
+  background-color: whitesmoke;
+  border: 1px solid #0059dd;
   border-radius: 10px;
   padding: 10px;
 }
-
+#add-btn:hover,
+#add-btn:active {
+  color: whitesmoke;
+  background: #0059dd;
+  cursor: pointer;
+}
 input {
   background: rgb(237, 237, 237);
   border: 0;
@@ -73,6 +82,7 @@ h3 {
   margin: 0;
 }
 .appointment {
+  position: relative;
   margin-top: 10px;
   border-radius: 10px;
   border: 1px solid gray;
@@ -81,12 +91,14 @@ h3 {
 h2 {
   margin: 0;
   font-size: medium;
+  font-weight: 100;
 }
 .lc-one {
   display: flex;
   justify-content: space-between;
+  gap: 10px;
   align-items: center;
-  margin: 5px;
+  margin: 10px 0;
 }
 #starred {
   color: #0059dd;
@@ -101,21 +113,55 @@ h2 {
   color: whitesmoke;
   background: #0059dd;
 }
+#deleteAll {
+  color: whitesmoke;
+  background: #0059dd;
+  border: 1px solid #0059dd;
+  padding: 3px 20px;
+  border-radius: 30px;
+}
 #secondContainer {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
+.star {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-weight: 100;
+}
 
-@media only screen and (max-width: 768px) {
+.delete {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+.delete:hover {
+  cursor: pointer;
+  color: red;
+}
+.buttons {
+  display: flex;
+  gap: 20px;
+}
+@media only screen and (max-width: 660px) {
   img {
     width: 100px;
   }
   .mainContainer {
-    padding: 20px 30px;
+    width: 350px;
+    padding: 30px 30px;
   }
   .firstContainer {
     flex-direction: column;
     gap: 10px;
+  }
+  #secondContainer {
+    gap: 0;
+    grid-template-columns: none;
+  }
+  .lc-one {
+    flex-direction: column;
   }
 }
