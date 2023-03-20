@@ -1,8 +1,9 @@
 const secondContainer = document.getElementById("secondContainer")
 const title = document.getElementById("title")
 const date = document.getElementById("date")
+const time = document.getElementById("time")
 const addbtn = document.getElementById("add-btn")
-let appointmentDetails = [{ name: "Mahadev", date: "09-03-2022", star: false }, { name: "Mahadev", date: "09-03-2023", star: false }]
+let appointmentDetails = [{ name: "Mahadev", date: "09-03-2022", time: "12:45", star: false }, { name: "Saiteja", date: "09-03-2023", time: "12:30", star: false }]
 // let appointmentDetails = []
 let warning = document.getElementById("warning")
 let starredBtnActive = false
@@ -15,6 +16,7 @@ function render(details) {
         s = `<div id="app-${i}" class="appointment">
                 <h2 class="title">${details[i].name}</h2>
                 <h3>Date: ${details[i].date}</h3>
+                <h3>Time: ${details[i].time}</h3>
                 <i id="star-${i}" onclick="star(this.id)" class="fa-regular fa-star star"></i>
                 <i id="delete-${i}" onclick="delApp(this.id)" class="fa-solid fa-trash delete"></i>
             </div>`
@@ -31,7 +33,7 @@ function render(details) {
 
 }
 addbtn.addEventListener("click", function () {
-    if (title.value === "" || date.value === "") {
+    if (title.value === "" || date.value === "" || time.value === "") {
         warning.textContent = "One of the field is Empty"
     }
     else {
@@ -39,10 +41,12 @@ addbtn.addEventListener("click", function () {
         let objDetails = {
             name: title.value,
             date: date.value,
-            starred: false
+            time: time.value,
+            star: false
         }
         title.value = ""
         date.value = ""
+        time.value = ""
         const rev = objDetails.date.split("-")
         newS = ""
         for (let i = rev.length - 1; i >= 0; i--) {
